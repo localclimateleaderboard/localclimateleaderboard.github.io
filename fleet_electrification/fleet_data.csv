@@ -4,10 +4,6 @@ date,city,value,source
 2023-01-01,Tokyo,1,Internal
 2023-01-01,Paris,7,Survey
 2023-02-01,New York,5,Internal
-2023-02-01,London,9,External
-2023-02-01,Tokyo,5,Internal
 2023-02-01,Paris,5,Survey
 2023-03-01,New York,1,Internal
 2023-03-01,London,1,External
-2023-03-01,Tokyo,1,Internal
-2023-03-01,Paris,1,Survey
