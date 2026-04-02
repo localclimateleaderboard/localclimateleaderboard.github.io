@@ -1,0 +1,5 @@
+date,city,value,source
+2023-01-01,New York,120,Internal
+2023-01-01,London,85,External
+2023-02-01,New York,135,Internal
+2023-02-01,London,90,External

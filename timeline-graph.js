@@ -84,19 +84,19 @@ class TimelineGraph extends HTMLElement {
         if (!src) return;
 
         try {
-            let csvText = '';
-            if (src === 'mock-data.csv') {
-                csvText = this.getMockCSV();
-            } else {
-                const response = await fetch(src);
-                csvText = await response.text();
+            // This will now fetch 'data.csv' if src="data.csv"
+            const response = await fetch(src);
+            
+            if (!response.ok) {
+                throw new Error(`Failed to fetch CSV: ${response.statusText}`);
             }
-
+            
+            const csvText = await response.text();
             const data = this.parseCSV(csvText);
             this.drawChart(data);
         } catch (error) {
             const container = this.shadowRoot.querySelector('.chart-container');
-            container.innerHTML = `<div class="loading" style="color: #ef4444;">Error loading data</div>`;
+            container.innerHTML = `<div class="loading" style="color: #ef4444;">Error: ${error.message}</div>`;
             console.error('Timeline component error:', error);
         }
     }
