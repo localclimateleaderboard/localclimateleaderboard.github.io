@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fleet Electrification Leaderboard</title>
+    
+    <script src="../components/timeline-graph.js" defer></script>
+    <script src="../components/city-leaderboard.js" defer></script>
+    <script src="../components/city-dashboard.js" defer></script>
+    
+    <style>
+        body { padding: 40px; background: #f3f4f6; }
+    </style>
+</head>
+<body>
+
+    <city-dashboard 
+        src="fleet_data.csv" 
+        title="Example page" 
+        order="desc">
+    </city-dashboard>
+
+</body>
+</html>
