@@ -8,7 +8,7 @@ class CityDashboard extends HTMLElement {
     connectedCallback() {
         const src = this.getAttribute('src') || 'dashboard-data.csv';
         const title = this.getAttribute('title') || 'City Performance';
-        const order = this.getAttribute('order') || 'desc';
+        const order = this.getAttribute('order') || 'asc';
 
         this.shadowRoot.innerHTML = `
             <style>
