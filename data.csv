@@ -1,5 +1,13 @@
 date,city,value,source
 2023-01-01,New York,120,Internal
 2023-01-01,London,85,External
+2023-01-01,Tokyo,150,Internal
+2023-01-01,Paris,70,Survey
 2023-02-01,New York,135,Internal
 2023-02-01,London,90,External
+2023-02-01,Tokyo,145,Internal
+2023-02-01,Paris,95,Survey
+2023-03-01,New York,160,Internal
+2023-03-01,London,110,External
+2023-03-01,Tokyo,165,Internal
+2023-03-01,Paris,100,Survey

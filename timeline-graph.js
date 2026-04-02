@@ -6,10 +6,6 @@ class TimelineGraph extends HTMLElement {
         this.attachShadow({ mode: 'open' });
     }
 
-    static get observedAttributes() {
-        return ['src', 'title'];
-    }
-
     async connectedCallback() {
         this.renderSkeleton();
         await this.loadChartJS();
@@ -22,7 +18,6 @@ class TimelineGraph extends HTMLElement {
                 :host {
                     display: block;
                     width: 100%;
-                    max-width: 900px;
                     font-family: inherit;
                 }
                 .card {
@@ -31,6 +26,7 @@ class TimelineGraph extends HTMLElement {
                     padding: 1.5rem;
                     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
                     border: 1px solid #e5e7eb;
+                    box-sizing: border-box;
                 }
                 .header {
                     margin-bottom: 1.5rem;
@@ -45,7 +41,7 @@ class TimelineGraph extends HTMLElement {
                 }
                 .chart-container {
                     position: relative;
-                    height: 400px;
+                    height: 400px; /* Base height */
                     width: 100%;
                 }
                 .loading {
@@ -62,7 +58,7 @@ class TimelineGraph extends HTMLElement {
                     <h2 class="title">${this.getAttribute('title') || 'Timeline Graph'}</h2>
                 </div>
                 <div class="chart-container">
-                    <div class="loading">Loading data...</div>
+                    <div class="loading">Loading graph...</div>
                     <canvas id="chart"></canvas>
                 </div>
             </div>
@@ -84,20 +80,15 @@ class TimelineGraph extends HTMLElement {
         if (!src) return;
 
         try {
-            // This will now fetch 'data.csv' if src="data.csv"
             const response = await fetch(src);
-            
-            if (!response.ok) {
-                throw new Error(`Failed to fetch CSV: ${response.statusText}`);
-            }
-            
+            if (!response.ok) throw new Error(`HTTP error ${response.status}`);
             const csvText = await response.text();
             const data = this.parseCSV(csvText);
             this.drawChart(data);
         } catch (error) {
-            const container = this.shadowRoot.querySelector('.chart-container');
-            container.innerHTML = `<div class="loading" style="color: #ef4444;">Error: ${error.message}</div>`;
-            console.error('Timeline component error:', error);
+            this.shadowRoot.querySelector('.chart-container').innerHTML = 
+                `<div class="loading" style="color: #ef4444;">Error: ${error.message}</div>`;
+            console.error('Graph Error:', error);
         }
     }
 
@@ -118,9 +109,7 @@ class TimelineGraph extends HTMLElement {
         const loadingEl = this.shadowRoot.querySelector('.loading');
         if (loadingEl) loadingEl.remove();
 
-        const canvas = this.shadowRoot.getElementById('chart');
-        const ctx = canvas.getContext('2d');
-
+        const ctx = this.shadowRoot.getElementById('chart').getContext('2d');
         const dates = [...new Set(data.map(d => d.date))].sort();
         const cities = [...new Set(data.map(d => d.city))];
         const colors = ['#3b82f6', '#10b981', '#f43f5e', '#f59e0b', '#8b5cf6'];
@@ -139,11 +128,7 @@ class TimelineGraph extends HTMLElement {
                 backgroundColor: color,
                 borderWidth: 2,
                 pointBackgroundColor: '#fff',
-                pointBorderColor: color,
-                pointHoverBackgroundColor: color,
-                pointHoverBorderColor: '#fff',
                 pointRadius: 4,
-                pointHoverRadius: 6,
                 tension: 0.3 
             };
         });
@@ -154,41 +139,20 @@ class TimelineGraph extends HTMLElement {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                interaction: { mode: 'index', intersect: false },
                 plugins: {
-                    legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8, font: { family: 'inherit' } } },
+                    legend: { labels: { usePointStyle: true, boxWidth: 8 } },
                     tooltip: {
-                        backgroundColor: 'rgba(17, 24, 39, 0.9)',
-                        padding: 10,
-                        cornerRadius: 8,
                         callbacks: {
-                            afterLabel: (context) => {
-                                const city = context.dataset.label;
-                                const date = context.label;
-                                const record = data.find(d => d.city === city && d.date === date);
-                                return record && record.source ? `Source: ${record.source}` : '';
+                            afterLabel: (ctx) => {
+                                const record = data.find(d => d.city === ctx.dataset.label && d.date === ctx.label);
+                                return record ? `Source: ${record.source}` : '';
                             }
                         }
                     }
                 },
-                scales: {
-                    x: { grid: { display: false } },
-                    y: { border: { display: false }, grid: { color: '#f3f4f6' } }
-                }
+                scales: { x: { grid: { display: false } }, y: { border: { display: false } } }
             }
         });
     }
-
-    getMockCSV() {
-        return `date,city,value,source
-2023-01-01,New York,120,Internal
-2023-01-01,London,85,External
-2023-01-01,Tokyo,150,Internal
-2023-02-01,New York,135,Internal
-2023-02-01,London,90,External
-2023-02-01,Tokyo,145,Internal`;
-    }
 }
-
-// Register the custom element
 customElements.define('timeline-graph', TimelineGraph);
