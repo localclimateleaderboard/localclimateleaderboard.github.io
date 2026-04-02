@@ -2,23 +2,224 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Local Climate Leaderboard</title>
-    
-    <script src="./timeline-graph.js" defer></script>
-    <script src="./city-leaderboard.js" defer></script>
-    <script src="./city-dashboard.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Data Portal</title>
     
     <style>
-        body { padding: 40px; background: #f3f4f6; }
+        * { box-sizing: border-box; }
+        
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f3f4f6; /* Shared soft gray background */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: #111827;
+        }
+
+        /* 2. Page Header Styling */
+        header {
+            width: 100%;
+            background-color: #ffffff;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .header-logo {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #3b82f6; /* Shared Blue Accent */
+        }
+
+        /* 3. Main Content Container */
+        main {
+            flex-grow: 1;
+            width: 100%;
+            max-width: 1200px; /* Constraints width on large screens */
+            padding: 3rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .hero h2 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero p {
+            font-size: 1.125rem;
+            color: #6b7280;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* 4. Navigation Cards Grid (RESPONSIVE) */
+        .card-grid {
+            display: grid;
+            gap: 2rem; /* Consistent 2rem gap */
+            width: 100%;
+            grid-template-columns: 1fr; /* Single column on mobile */
+        }
+
+        /* Tablet (2 columns) */
+        @media (min-width: 768px) {
+            .card-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Desktop (3 columns) */
+        @media (min-width: 1024px) {
+            .card-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* 5. Nav Card Styling (MIRRORS COMPONENT STYLING) */
+        .nav-card {
+            display: block; /* Makes the entire card clickable */
+            text-decoration: none; /* Removes underline from text */
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+
+        /* Modern Hover Interaction */
+        .nav-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-color: #d1d5db;
+        }
+
+        /* Visual "Icon" for each card */
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            background-color: #f3f4f6;
+            color: #111827;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #111827;
+        }
+
+        .card-description {
+            font-size: 0.95rem;
+            color: #6b7280;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Action Link styling inside the card */
+        .card-action {
+            display: inline-flex;
+            align-items: center;
+            color: #3b82f6; /* Shared Blue Accent */
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .card-action::after {
+            content: '→';
+            margin-left: 0.5rem;
+            transition: transform 0.2s;
+        }
+
+        .nav-card:hover .card-action::after {
+            transform: translateX(4px);
+        }
+
+        /* Page Footer */
+        footer {
+            width: 100%;
+            padding: 3rem 2rem;
+            border-top: 1px solid #e5e7eb;
+            background-color: #ffffff;
+            margin-top: auto;
+            text-align: center;
+            font-size: 0.875rem;
+            color: #9ca3af;
+        }
     </style>
 </head>
 <body>
 
-    <city-dashboard 
-        src="data.csv" 
-        title="Example page" 
-        order="desc">
-    </city-dashboard>
+    <header>
+        <span class="header-logo">AnalyticsDB</span>
+        <h1>Executive Data Portal</h1>
+    </header>
+
+    <main>
+        <div class="hero">
+            <h2>Q1 Performance Dashboards</h2>
+            <p>Access focused, real-time analytics for key city operations. Select a metric below to view the detailed timeline and leaderboards.</p>
+        </div>
+
+        <div class="card-grid">
+            
+            <a href="dashboard-revenue.html" class="nav-card">
+                <div class="card-icon" style="background-color: #ecfdf5; color: #059669;">$</div>
+                <h3 class="card-title">Regional Revenue</h3>
+                <p class="card-description">View revenue growth trends by major city, analyze top performers, and identify key drivers for quarterly variance.</p>
+                <span class="card-action">View Revenue Dashboard</span>
+            </a>
+
+            <a href="dashboard-users.html" class="nav-card">
+                <div class="card-icon" style="background-color: #eff6ff; color: #2563eb;">📈</div>
+                <h3 class="card-title">User Acquisition</h3>
+                <p class="card-description">Track new user sign-ups, activation rates, and user base distribution across your target city demographics.</p>
+                <span class="card-action">View Acquisition Dashboard</span>
+            </a>
+
+            <a href="dashboard-csat.html" class="nav-card">
+                <div class="card-icon" style="background-color: #fffbeb; color: #d97706;">⭐️</div>
+                <h3 class="card-title">Customer Satisfaction</h3>
+                <p class="card-description">Analyze CSAT trends and NPS scores. Monitor city-level feedback and rank service centers by customer ratings.</p>
+                <span class="card-action">View Satisfaction Dashboard</span>
+            </a>
+
+        </div>
+    </main>
+
+    <footer>
+        © 2023 AnalyticsDB Inc. All rights reserved. Data updated hourly.
+    </footer>
 
 </body>
 </html>
