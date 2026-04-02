@@ -2,67 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Q1 City Performance Dashboard</title>
-    
-    <style>
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f3f4f6; /* Soft light gray background */
-            margin: 0;
-            padding: 2rem;
-            color: #111827;
-        }
-
-        h1 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-top: 0;
-            margin-bottom: 2rem;
-            padding-left: 0.5rem;
-        }
-
-        /* 2. Modern Grid Layout for Dashboard */
-        .dashboard-container {
-            display: grid;
-            gap: 2rem; /* The gap between components */
-            
-            /* Responsive Grid configuration:
-               - On mobile, it's 1 column (default).
-               - On large screens, use the 60% / 30% split. */
-            grid-template-columns: 1fr;
-        }
-
-        /* Large screens (tablet and desktop) */
-        @media (min-width: 992px) {
-            .dashboard-container {
-                grid-template-columns: minmax(0, 0.60fr) minmax(0, 0.30fr); /* 60% and 30% split */
-                justify-content: center; /* Center the grid on the page */
-                align-items: start; /* Don't stretch the leaderboard vertically */
-            }
-        }
-    </style>
+    <title>Local Climate Leaderboard</title>
     
     <script src="./timeline-graph.js" defer></script>
     <script src="./city-leaderboard.js" defer></script>
+    <script src="./city-dashboard.js" defer></script>
+    
+    <style>
+        body { padding: 40px; background: #f3f4f6; }
+    </style>
 </head>
 <body>
 
-    <h1>Executive Overview: Q1 Performance</h1>
-
-    <div class="dashboard-container">
-        
-        <timeline-graph 
-            title="Revenue Performance Trend" 
-            src="data.csv">
-        </timeline-graph>
-
-        <city-leaderboard 
-            src="data.csv"
-            order="desc">
-        </city-leaderboard>
-
-    </div>
+    <city-dashboard 
+        src="data.csv" 
+        title="Example page" 
+        order="desc">
+    </city-dashboard>
 
 </body>
 </html>
