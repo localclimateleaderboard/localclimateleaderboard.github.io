@@ -41,7 +41,7 @@ class CityDashboard extends HTMLElement {
             
             <section>
                 <h1>${title}</h1>
-                <h2>${subtitle}</h2>
+                <h3>${subtitle}</h3>
                 <div class="dashboard-grid">
                     <timeline-graph src="${src}" title="Data Timeline"></timeline-graph>
                     <city-leaderboard src="${src}" order="${order}"></city-leaderboard>

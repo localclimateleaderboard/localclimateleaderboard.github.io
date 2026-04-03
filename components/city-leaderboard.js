@@ -153,20 +153,26 @@ class CityLeaderboard extends HTMLElement {
     processLeaderboardData(data) {
         if (data.length === 0) return [];
 
-        // 1. Convert values to numbers once
-        const normalizedData = data.map(d => ({...d, value: parseFloat(d.value)}));
+        // 1. Group by city and keep only the most recent entry
+        const latestByCity = data.reduce((acc, current) => {
+            const city = current.city;
+            const currentDate = current.date;
 
-        // 2. Find the *most recent* date in the entire CSV
-        const maxDate = normalizedData.reduce((max, item) => 
-            (item.date > max ? item.date : max), normalizedData[0].date);
-        
-        // Update subtitle to show the relevant date
-        this.shadowRoot.getElementById('subtitle').textContent = `As of ${maxDate}`;
+            // If we haven't seen this city, or this record is newer than the one stored
+            if (!acc[city] || currentDate > acc[city].date) {
+                acc[city] = {
+                    ...current,
+                    value: parseFloat(current.value) || 0
+                };
+            }
+            return acc;
+        }, {});
 
-        // 3. Filter data only for that specific date
-        const recentData = normalizedData.filter(d => d.date === maxDate);
+        // 2. Convert the object back into an array
+        const recentData = Object.values(latestByCity);
 
-        // 4. Sort based on the 'order' prop (default asc)
+
+        // 4. Sort based on the 'order' prop
         const order = this.getAttribute('order') || 'asc';
         recentData.sort((a, b) => {
             return order === 'desc' ? b.value - a.value : a.value - b.value;
