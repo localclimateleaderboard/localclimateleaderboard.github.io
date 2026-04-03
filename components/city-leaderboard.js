@@ -178,6 +178,8 @@ class CityLeaderboard extends HTMLElement {
             return order === 'desc' ? b.value - a.value : a.value - b.value;
         });
 
+        console.log(recentData)
+
         return recentData;
     }
 
@@ -201,6 +203,8 @@ class CityLeaderboard extends HTMLElement {
                 `).join('')}
             </ol>
         `;
+
+        console.log(listHTML)
         
         contentEl.innerHTML = listHTML;
     }
