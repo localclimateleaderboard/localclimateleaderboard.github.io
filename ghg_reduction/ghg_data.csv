@@ -1,9 +1,10 @@
 date,city,value,source
-2023-01-01,New York,1,Internal
-2023-01-01,London,8,External
-2023-01-01,Tokyo,1,Internal
-2023-01-01,Paris,7,Survey
-2023-02-01,New York,5,Internal
-2023-02-01,Paris,5,Survey
-2023-03-01,New York,1,Internal
-2023-03-01,London,1,External
+2024-01-01, Palo Alto, 50, https://www.paloalto.gov/City-Hall/Sustainability/Emissions-Reduction-Goals-and-Progress
+2020-01-01, Santa Monica, 60, https://www.santamonica.gov/sustainable-city-plan/resource-conservation/greenhouse-gas-emissions
+2019-01-01, Santa Monica, 36, https://www.santamonica.gov/sustainable-city-plan/resource-conservation/greenhouse-gas-emissions
+2018-01-01, Santa Monica, 28, https://www.santamonica.gov/sustainable-city-plan/resource-conservation/greenhouse-gas-emissions
+2022-01-01, San Francisco, 48, https://www.sf.gov/data--greenhouse-gas-emissions
+2020-01-01, San Francisco, 48, https://www.sf.gov/data--greenhouse-gas-emissions
+2019-01-01, San Francisco, 41, https://www.sf.gov/data--greenhouse-gas-emissions
+2018-01-01, San Francisco, 36, https://www.sf.gov/data--greenhouse-gas-emissions
+
