@@ -109,7 +109,6 @@ class CityLeaderboard extends HTMLElement {
             <div class="card">
                 <div class="header">
                     <h2 class="title">City Leaderboard</h2>
-                    <p class="subtitle" id="subtitle">Loading data...</p>
                 </div>
                 <div id="content">
                     <div class="loading">Loading ranks...</div>
@@ -178,8 +177,6 @@ class CityLeaderboard extends HTMLElement {
             return order === 'desc' ? b.value - a.value : a.value - b.value;
         });
 
-        console.log(recentData)
-
         return recentData;
     }
 
@@ -203,8 +200,6 @@ class CityLeaderboard extends HTMLElement {
                 `).join('')}
             </ol>
         `;
-
-        console.log(listHTML)
         
         contentEl.innerHTML = listHTML;
     }
