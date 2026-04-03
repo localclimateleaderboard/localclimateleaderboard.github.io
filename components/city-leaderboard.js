@@ -109,7 +109,6 @@ class CityLeaderboard extends HTMLElement {
             <div class="card">
                 <div class="header">
                     <h2 class="title">City Leaderboard</h2>
-                    <p class="subtitle" id="subtitle">Loading data...</p>
                 </div>
                 <div id="content">
                     <div class="loading">Loading ranks...</div>
