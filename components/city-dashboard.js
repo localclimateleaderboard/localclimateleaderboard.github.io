@@ -9,7 +9,7 @@ class CityDashboard extends HTMLElement {
         const src = this.getAttribute('src') || 'dashboard-data.csv';
         const title = this.getAttribute('title') || 'City Performance';
         const order = this.getAttribute('order') || 'asc';
-        const subtitle = this.getAttribute('subtitle') || ''
+        const subtitle = this.getAttribute('subtitle') || '';
 
         this.shadowRoot.innerHTML = `
             <style>
