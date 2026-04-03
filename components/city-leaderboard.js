@@ -161,7 +161,7 @@ class CityLeaderboard extends HTMLElement {
             (item.date > max ? item.date : max), normalizedData[0].date);
         
         // Update subtitle to show the relevant date
-        this.shadowRoot.getElementById('subtitle').textContent = `Based on data from ${maxDate}`;
+        this.shadowRoot.getElementById('subtitle').textContent = `As of ${maxDate}`;
 
         // 3. Filter data only for that specific date
         const recentData = normalizedData.filter(d => d.date === maxDate);

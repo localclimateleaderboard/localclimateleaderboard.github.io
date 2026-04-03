@@ -9,6 +9,7 @@ class CityDashboard extends HTMLElement {
         const src = this.getAttribute('src') || 'dashboard-data.csv';
         const title = this.getAttribute('title') || 'City Performance';
         const order = this.getAttribute('order') || 'asc';
+        const subtitle = this.getAttribute('subtitle') || ''
 
         this.shadowRoot.innerHTML = `
             <style>
@@ -40,8 +41,9 @@ class CityDashboard extends HTMLElement {
             
             <section>
                 <h1>${title}</h1>
+                <h2>${subtitle}</h2>
                 <div class="dashboard-grid">
-                    <timeline-graph src="${src}" title="Trend Analysis"></timeline-graph>
+                    <timeline-graph src="${src}" title="Historical Data"></timeline-graph>
                     <city-leaderboard src="${src}" order="${order}"></city-leaderboard>
                 </div>
             </section>
